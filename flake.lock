@@ -1,0 +1,65 @@
+{
+  "nodes": {
+    "anki-toolkit": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1769915321,
+        "narHash": "sha256-vTedbJirZj4z9qdIdtRF0ygTGMIICOGqqoW2U5+TRdQ=",
+        "owner": "joshrotenberg",
+        "repo": "anki-toolkit",
+        "rev": "18cc27c5ac6f7ecf617558a3f341d3cadd8e8051",
+        "type": "github"
+      },
+      "original": {
+        "owner": "joshrotenberg",
+        "repo": "anki-toolkit",
+        "type": "github"
+      }
+    },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1779560665,
+        "narHash": "sha256-tpyBcxPpcQb8ukyNF7DoCwfSY3VPsxHoYwj00Cayv5o=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "64c08a7ca051951c8eae34e3e3cb1e202fe36786",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "root": {
+      "inputs": {
+        "anki-toolkit": "anki-toolkit",
+        "nixpkgs": "nixpkgs",
+        "rust-overlay": "rust-overlay"
+      }
+    },
+    "rust-overlay": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1780197589,
+        "narHash": "sha256-FVCr2Ij/jKf59a4LW481eeOF6rJRreOBrVgW/aUBTrw=",
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "rev": "21632e942d89bf1cce4e5a63d7e58a215a0cbfcc",
+        "type": "github"
+      },
+      "original": {
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "type": "github"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}
