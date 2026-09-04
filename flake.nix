@@ -12,7 +12,7 @@
     };
   };
 
-  outputs = { nixpkgs, rust-overlay, anki-toolkit, ... }:
+  outputs = { self, nixpkgs, rust-overlay, anki-toolkit, ... }:
     let
       systems = [
         "x86_64-linux"
@@ -32,6 +32,26 @@
           };
         in
         {
+          default = self.packages.${system}.ptx;
+
+          # Scrapes the PTX ISA HTML and emits the deck.
+          ptx = pkgs.rustPlatform.buildRustPackage {
+            pname = "ptx";
+            version = "0.1.0";
+            src = ./.;
+            cargoLock = {
+              lockFile = ./Cargo.lock;
+              # ankit-builder is a git dependency, so its checkout needs a hash.
+              # This is the same revision the anki-toolkit flake input pins, so
+              # it matches that entry's narHash in flake.lock.
+              outputHashes = {
+                "ankit-0.1.0" = "sha256-vTedbJirZj4z9qdIdtRF0ygTGMIICOGqqoW2U5+TRdQ=";
+              };
+            };
+            nativeBuildInputs = [ pkgs.pkg-config ];
+            buildInputs = [ pkgs.openssl ];
+          };
+
           ankit-mcp = pkgs.rustPlatform.buildRustPackage {
             pname = "ankit-mcp";
             version = "0.1.0";
@@ -61,8 +81,10 @@
           default = pkgs.mkShell {
             packages = [
               rust
-              # pkgs.pkg-config
-              # pkgs.openssl
+              # ankit-builder's default features include "connect", whose
+              # AnkiConnect client reaches openssl through reqwest.
+              pkgs.pkg-config
+              pkgs.openssl
             ];
 
             RUST_BACKTRACE = "1";

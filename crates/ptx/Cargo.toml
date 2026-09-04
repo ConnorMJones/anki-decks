@@ -4,3 +4,20 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+scraper = "0.20"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+toml = "0.8"
+sha2 = "0.10"
+# Pinned to the same revision as the flake's anki-toolkit input.
+# Default features (apkg + connect) rather than just "apkg": at this revision
+# DeckBuilder::write_toml is not feature-gated but calls into export.rs, which
+# is gated behind "connect", so an apkg-only build fails to compile.
+ankit-builder = { git = "https://github.com/joshrotenberg/anki-toolkit", rev = "18cc27c5ac6f7ecf617558a3f341d3cadd8e8051", version = "0.1.0" }
+
+[dev-dependencies]
+tempfile = "3.27.0"
+# Used by the integration test to open the .apkg and inspect the collection
+# database directly, rather than trusting that the write succeeded.
+zip = "7.2"
+rusqlite = { version = "0.38", features = ["bundled"] }
